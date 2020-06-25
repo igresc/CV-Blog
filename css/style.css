@@ -1,0 +1,9 @@
+.navbar-brand {
+    font-size: 2rem !important;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    border: none;
+}
