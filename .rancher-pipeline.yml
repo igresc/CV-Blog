@@ -8,8 +8,7 @@ stages:
         ln -s `pwd` /go/src/github.com/igresc/cv-blog
         cd /go/src/github.com/igresc/cv-blog
         go build -o bin/cv
-        ls -la
-        pwd
+        ls -la -R
 - name: Publish
   steps:
   - publishImageConfig:
