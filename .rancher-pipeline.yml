@@ -1,11 +1,13 @@
 stages:
-- name: Deploy
+- name: Build
   steps:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: cvblog/app:v1
+      tag: cvblog:${CICD_EXECUTION_SEQUENCE}
       registry: 127.0.0.1:34170
+- name: Deploy
+  steps:
   - applyYamlConfig:
       path: ./deployment.yaml
 timeout: 60
