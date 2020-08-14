@@ -1,8 +1,6 @@
-FROM golang:latest
-WORKDIR /go/src/
-RUN go get encoding/json fmt html/template io/ioutil net/http
-COPY main.go .
-RUN go build -o cv
+FROM golang:1.11
+EXPOSE 80
+COPY ./bin/cv /usr/local/bin/
 CMD ["cv"]
 
 # FROM alpine:latest
