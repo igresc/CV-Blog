@@ -74,5 +74,5 @@ func main() {
 
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/projects/", projectHandler)
-	fmt.Println(http.ListenAndServe(":8000", nil))
+	fmt.Println(http.ListenAndServe(":80", nil))
 }
