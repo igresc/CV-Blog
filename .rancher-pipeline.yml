@@ -4,7 +4,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: CVBlog/app:v1
+      tag: cvblog/app:v1
       registry: 127.0.0.1:34170
 timeout: 60
 notification: {}
