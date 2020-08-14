@@ -1,7 +1,7 @@
 FROM golang:1.11
 EXPOSE 80
-COPY src/ /src/
-RUN ls -la /src/*
+COPY ./src/ /asdf/
+RUN ls -la /asdf/*
 COPY ./bin/cv /usr/local/bin/
 CMD ["cv"]
 
