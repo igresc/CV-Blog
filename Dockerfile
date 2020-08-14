@@ -1,5 +1,6 @@
 FROM golang:1.11
 EXPOSE 80
+RUN ls -la
 COPY ./bin/cv /usr/local/bin/
 CMD ["cv"]
 
