@@ -9,6 +9,7 @@ stages:
         cd /go/src/github.com/igresc/cv-blog
         ls -la
         go build -o bin/cv
+        ls -la
 - name: Publish
   steps:
   - publishImageConfig:
