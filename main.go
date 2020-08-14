@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+var path =: "/go/src/github.com/igresc/cv-blog/src"
+
 var t *template.Template
 
 type Repo struct {
@@ -62,11 +64,11 @@ func projectHandler(w http.ResponseWriter, r *http.Request) {
 func init() {
 	t = template.New("")
 	t.Funcs(template.FuncMap{"mod": func(i int) bool { return i%2 == 0 }})
-	t = template.Must(t.ParseGlob("templates/*.html"))
+	t = template.Must(t.ParseGlob("path/templates/*.html"))
 }
 
 func main() {
-	cssHandler := http.FileServer(http.Dir("./css/"))
+	cssHandler := http.FileServer(http.Dir(path+"/css/"))
 	http.Handle("/css/", http.StripPrefix("/css/", cssHandler))
 
 	http.HandleFunc("/", indexHandler)
