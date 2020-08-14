@@ -8,10 +8,11 @@ import (
 	"net/http"
 )
 
-var path =: "/go/src/github.com/igresc/cv-blog/src"
+var path string = "/go/src/github.com/igresc/cv-blog/src"
 
 var t *template.Template
 
+// Repo struct
 type Repo struct {
 	Name        string `json:"name"`
 	URL         string `json:"html_url"`
@@ -68,7 +69,7 @@ func init() {
 }
 
 func main() {
-	cssHandler := http.FileServer(http.Dir(path+"/css/"))
+	cssHandler := http.FileServer(http.Dir(path + "/css/"))
 	http.Handle("/css/", http.StripPrefix("/css/", cssHandler))
 
 	http.HandleFunc("/", indexHandler)
