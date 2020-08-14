@@ -1,14 +1,20 @@
 stages:
 - name: Build
   steps:
+  - runScriptConfig:
+      image: golang:1.11
+      shellScript: |-
+        mkdir -p /go/src/github.com/igresc
+        ln -s `pwd` /go/src/github.com/igresc/cv-blog
+        cd /go/src/github.com/igresc/cv-blog
+        go build -o bin/cv-blog-server
+- name: Publish
+  steps:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: cvblog:${CICD_EXECUTION_SEQUENCE}
-      registry: 127.0.0.1:34170
+      tag: cv-blog-server:${CICD_EXECUTION_SEQUENCE}
 - name: Deploy
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
-timeout: 60
-notification: {}
