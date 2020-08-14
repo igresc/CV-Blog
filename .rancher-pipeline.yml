@@ -19,9 +19,4 @@ stages:
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
-notification:
-  recipients:
-  - recipient: http://discordapp.com/api/webhooks/743847179461853266/wUXoscdFy3_QYeNZxnEByTCHONp5d_6P6YYPw4msYuurpy44-cTfDAPdq4fZrRjtAXGR
-    notifier: c-ljwjp:n-gltp6
-  condition:
-  - Success
+notification: {}
