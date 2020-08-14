@@ -7,7 +7,7 @@ stages:
         mkdir -p /go/src/github.com/igresc
         ln -s `pwd` /go/src/github.com/igresc/cv-blog
         cd /go/src/github.com/igresc/cv-blog
-        go build -o bin/cv-blog-server
+        go build -o bin/cv
 - name: Publish
   steps:
   - publishImageConfig:
@@ -18,3 +18,4 @@ stages:
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
+notification: {}
