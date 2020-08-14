@@ -19,4 +19,9 @@ stages:
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
-notification: {}
+notification:
+  recipients:
+  - recipient: default
+    notifier: c-ljwjp:n-bm8cf
+  condition:
+  - Success
