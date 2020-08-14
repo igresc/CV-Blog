@@ -7,6 +7,7 @@ stages:
         mkdir -p /go/src/github.com/igresc
         ln -s `pwd` /go/src/github.com/igresc/cv-blog
         cd /go/src/github.com/igresc/cv-blog
+        ls -la
         go build -o bin/cv
 - name: Publish
   steps:
