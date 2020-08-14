@@ -1,8 +1,8 @@
 FROM golang:1.11
 EXPOSE 80
-RUN ls -la ./src/
-# COPY ./src/ ./src/
-# RUN ls -la ./src/
+RUN ls -la .
+COPY ./ ./
+RUN ls -la .
 COPY ./bin/cv /usr/local/bin/
 CMD ["cv"]
 
