@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-var path string = "/go/src/github.com/igresc/cv-blog/src"
+var path string = "/go/"
 
 var t *template.Template
 
@@ -65,7 +65,7 @@ func projectHandler(w http.ResponseWriter, r *http.Request) {
 func init() {
 	t = template.New("")
 	t.Funcs(template.FuncMap{"mod": func(i int) bool { return i%2 == 0 }})
-	t = template.Must(t.ParseGlob("path/templates/*.html"))
+	t = template.Must(t.ParseGlob(path+"/templates/*.html"))
 }
 
 func main() {
@@ -74,5 +74,5 @@ func main() {
 
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/projects/", projectHandler)
-	fmt.Println(http.ListenAndServe(":8000", nil))
+	fmt.Println(http.ListenAndServe(":80", nil))
 }
