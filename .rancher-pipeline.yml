@@ -25,3 +25,5 @@ notification:
     notifier: c-ljwjp:n-bm8cf
   condition:
   - Success
+  - Changed
+  - Failed
