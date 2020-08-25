@@ -4,15 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io/ioutil"
+	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-var path string = "/go/"
+var path string = "./"
 
 var t *template.Template
 
-// Repo struct
+// Repo struct for Github repositories
 type Repo struct {
 	Name        string `json:"name"`
 	URL         string `json:"html_url"`
@@ -29,21 +31,26 @@ type projectPage struct {
 	Repos []Repo
 }
 
+type cvPage struct {
+	Title string
+}
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	p := indexPage{
 		Title: " Sergi Castro ",
 	}
 
-	if err := t.ExecuteTemplate(w, "home.html", p); err != nil {
+	if err := t.ExecuteTemplate(w, "home.gohtml", p); err != nil {
 		fmt.Println(err)
 	}
 }
 
 func projectHandler(w http.ResponseWriter, r *http.Request) {
-	resp, _ := http.Get("https://api.github.com/users/igresc/repos")
+	var bytes []byte
+	// resp, _ := http.Get("https://api.github.com/users/igresc/repos")
 
-	bytes, _ := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
+	// bytes, _ := ioutil.ReadAll(resp.Body)
+	// resp.Body.Close()
 
 	var rList []Repo
 	json.Unmarshal(bytes, &rList)
@@ -58,21 +65,47 @@ func projectHandler(w http.ResponseWriter, r *http.Request) {
 		Title: " Sergi Castro Projects ",
 		Repos: rList,
 	}
-	if err := t.ExecuteTemplate(w, "projects.html", p); err != nil {
+	if err := t.ExecuteTemplate(w, "projects.gohtml", p); err != nil {
 		fmt.Println(err)
 	}
 }
+
+func cvHandler(w http.ResponseWriter, r *http.Request) {
+	p := cvPage{
+		Title: " Sergi Castro CV ",
+	}
+
+	if err := t.ExecuteTemplate(w, "cv.gohtml", p); err != nil {
+		log.Fatal(err)
+	}
+}
+
 func init() {
 	t = template.New("")
 	t.Funcs(template.FuncMap{"mod": func(i int) bool { return i%2 == 0 }})
-	t = template.Must(t.ParseGlob(path+"/templates/*.html"))
+	t = template.Must(t.ParseGlob(path + "/templates/*.gohtml"))
+}
+
+func notFound(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusNotFound)
+	fmt.Fprint(w, "<h1>ERROR 404. Page not found!</h1>")
 }
 
 func main() {
-	cssHandler := http.FileServer(http.Dir(path + "/css/"))
-	http.Handle("/css/", http.StripPrefix("/css/", cssHandler))
 
-	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/projects/", projectHandler)
-	fmt.Println(http.ListenAndServe(":80", nil))
+	r := mux.NewRouter()
+
+	// imgHandler := http.FileServer(http.Dir(path + "/img/"))
+	// r.Handle("/img/", http.StripPrefix("/img/", imgHandler))
+	// cssHandler := http.FileServer(http.Dir(path + "/css/"))
+	// r.Handle("/css/", http.StripPrefix("/css/", cssHandler))
+	r.PathPrefix("/img/").Handler(http.StripPrefix("/img/", http.FileServer(http.Dir("."+"/img/"))))
+	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("."+"/css/"))))
+
+	r.HandleFunc("/", indexHandler)
+	r.HandleFunc("/projects", projectHandler)
+	r.HandleFunc("/cv", cvHandler)
+	r.NotFoundHandler = http.HandlerFunc(notFound)
+	fmt.Println(http.ListenAndServe(":3000", r))
 }
