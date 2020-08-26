@@ -19,6 +19,9 @@ stages:
   steps:
   - applyYamlConfig:
       path: ./deployment.yaml
+branch:
+  exclude:
+  - dev
 notification:
   recipients:
   - recipient: default
