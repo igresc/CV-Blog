@@ -38,6 +38,10 @@ type cvPage struct {
 	Path  string
 }
 
+type cvPage struct {
+	Title string
+}
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	p := indexPage{
 		Title: "Sergi Castro",
@@ -52,6 +56,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func projectHandler(w http.ResponseWriter, r *http.Request) {
 	var bytes []byte
 	// resp, _ := http.Get("https://api.github.com/users/igresc/repos")
+<<<<<<< HEAD
+=======
+
+>>>>>>> e7da8e8f8e0b6b60bfeab040ba12b05eedcebef9
 	// bytes, _ := ioutil.ReadAll(resp.Body)
 	// resp.Body.Close()
 
@@ -76,8 +84,12 @@ func projectHandler(w http.ResponseWriter, r *http.Request) {
 
 func cvHandler(w http.ResponseWriter, r *http.Request) {
 	p := cvPage{
+<<<<<<< HEAD
 		Title: "Sergi Castro CV",
 		Path:  r.URL.Path,
+=======
+		Title: " Sergi Castro CV ",
+>>>>>>> e7da8e8f8e0b6b60bfeab040ba12b05eedcebef9
 	}
 
 	if err := t.ExecuteTemplate(w, "cv.gohtml", p); err != nil {
@@ -101,6 +113,13 @@ func main() {
 
 	r := mux.NewRouter()
 
+<<<<<<< HEAD
+=======
+	// imgHandler := http.FileServer(http.Dir(path + "/img/"))
+	// r.Handle("/img/", http.StripPrefix("/img/", imgHandler))
+	// cssHandler := http.FileServer(http.Dir(path + "/css/"))
+	// r.Handle("/css/", http.StripPrefix("/css/", cssHandler))
+>>>>>>> e7da8e8f8e0b6b60bfeab040ba12b05eedcebef9
 	r.PathPrefix("/img/").Handler(http.StripPrefix("/img/", http.FileServer(http.Dir("."+"/img/"))))
 	r.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("."+"/css/"))))
 
