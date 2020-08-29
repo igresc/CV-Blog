@@ -7,3 +7,11 @@
 .navbar-toggler {
     border: none;
 }
+
+.bg-primary {
+    background-color: #6495ED !important;
+}
+
+.bg-secondary {
+    background-color: lightgray !important;
+}
