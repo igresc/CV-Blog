@@ -4,14 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"gopkg.in/robfig/cron.v2"
 )
 
 var path string = "./"
-
+var rList []Repo
 var t *template.Template
 
 // Repo struct for Github repositories
@@ -49,13 +51,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func projectHandler(w http.ResponseWriter, r *http.Request) {
-	var bytes []byte
-	// resp, _ := http.Get("https://api.github.com/users/igresc/repos")
-	// bytes, _ := ioutil.ReadAll(resp.Body)
-	// resp.Body.Close()
+func requestGithubProjects() {
+	fmt.Println("Cron executed")
+	resp, _ := http.Get("https://api.github.com/users/igresc/repos")
+	bytes, _ := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
 
-	var rList []Repo
 	json.Unmarshal(bytes, &rList)
 	for i, repo := range rList {
 		if repo.Fork {
@@ -64,6 +65,23 @@ func projectHandler(w http.ResponseWriter, r *http.Request) {
 			rList = rList[:len(rList)-1]
 		}
 	}
+}
+
+func projectHandler(w http.ResponseWriter, r *http.Request) {
+	// var bytes []byte
+	// resp, _ := http.Get("https://api.github.com/users/igresc/repos")
+	// bytes, _ := ioutil.ReadAll(resp.Body)
+	// resp.Body.Close()
+
+	// var rList []Repo
+	// json.Unmarshal(bytes, &rList)
+	// for i, repo := range rList {
+	// 	if repo.Fork {
+	// 		copy(rList[i:], rList[i+1:])
+	// 		rList[len(rList)-1] = Repo{} // or the zero value of T
+	// 		rList = rList[:len(rList)-1]
+	// 	}
+	// }
 	p := projectPage{
 		Title: "Sergi Castro Projects",
 		Repos: rList,
@@ -98,6 +116,10 @@ func notFound(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	c := cron.New()
+	c.AddFunc("@daily", requestGithubProjects)
+	c.Start()
 
 	r := mux.NewRouter()
 
