@@ -1,2 +1,4 @@
 secrets
 gin-bin
+tmp/
+runner.conf
