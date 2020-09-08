@@ -1,14 +1,4 @@
 stages:
-- name: Build
-  steps:
-  - runScriptConfig:
-      image: golang:1.11
-      shellScript: |-
-        mkdir -p /go/src/github.com/igresc
-        ln -s `pwd` /go/src/github.com/igresc/cv-blog
-        cd /go/src/github.com/igresc/cv-blog
-        go build -o bin/cv
-        ls -la -R
 - name: Publish
   steps:
   - publishImageConfig:
