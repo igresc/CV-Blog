@@ -104,6 +104,8 @@ func cvHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func init() {
+	requestGithubProjects()
+
 	t = template.New("")
 	t.Funcs(template.FuncMap{"mod": func(i int) bool { return i%2 == 0 }})
 	t = template.Must(t.ParseGlob(path + "/templates/*.gohtml"))
