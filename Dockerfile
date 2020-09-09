@@ -1,6 +1,6 @@
 FROM golang:1.14
 
-WORKDIR /go/src/CVBlog
+WORKDIR /go/src/github.com/igresc/cv-blog
 
 COPY . .
 
@@ -12,4 +12,4 @@ RUN ls -la .
 
 EXPOSE 80
 
-CMD ["CVBlog"]
+CMD ["cv-blog"]
