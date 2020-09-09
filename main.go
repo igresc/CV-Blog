@@ -132,5 +132,5 @@ func main() {
 	r.HandleFunc("/projects", projectHandler)
 	r.HandleFunc("/cv", cvHandler)
 	r.NotFoundHandler = http.HandlerFunc(notFound)
-	fmt.Println(http.ListenAndServe(":8000", r))
+	fmt.Println(http.ListenAndServe(":80", r))
 }
