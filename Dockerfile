@@ -1,14 +1,15 @@
-FROM golang:1.11
-EXPOSE 80
-RUN ls -la .
-COPY ./ ./
-RUN ls -la .
-COPY ./bin/cv /usr/local/bin/
-RUN pwd
-CMD ["cv"]
+FROM golang:1.14
 
-# FROM alpine:latest
-# RUN apk --no-cache add ca-certificates
-# WORKDIR /root/
-# COPY --from=0 /go/src/app .
-# CMD ["./app"]
+WORKDIR /go/src/CVBlog
+
+COPY . .
+
+RUN go get -d -v ./...
+RUN go install -v ./...
+
+RUN pwd
+RUN ls -la .
+
+EXPOSE 80
+
+CMD ["CVBlog"]
