@@ -10,6 +10,7 @@ import (
 
 var t *template.Template
 
+// Repo struct for unmarshall json from github API v3
 type Repo struct {
 	Name        string `json:"name"`
 	URL         string `json:"html_url"`
